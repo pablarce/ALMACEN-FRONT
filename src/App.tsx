@@ -1,11 +1,11 @@
 import { useState } from "react"
 
-import "./App.css"
+import ContactDataFetcher from "./components/UseQueryContext"
 
 function App() {
-    const [count, setCount] = useState(0)
-    console.log(count)
-    return <div>{count}</div>
+    const { data, error, isLoading } = ContactDataFetcher()
+    console.log()
+    return <div>{data[0].firstName}</div>
 }
 
 export default App
