@@ -1,11 +1,22 @@
-import { useState } from "react"
+import { Route, Routes } from "react-router-dom"
 
-import ContactDataFetcher from "./components/UseQueryContext"
+import { AuthProvider } from "./AuthContext"
+import { Toaster } from "./components/ui/toaster"
+import Login from "./pages/Login"
+import Management from "./pages/Management"
 
 function App() {
-    const { data, error, isLoading } = ContactDataFetcher()
-    console.log()
-    return <div>{data[0].firstName}</div>
+    return (
+        <AuthProvider>
+            <div className="bg-gray-900 overflow-hidden">
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="gestion" element={<Management />} />
+                </Routes>
+            </div>
+            <Toaster />
+        </AuthProvider>
+    )
 }
 
 export default App
