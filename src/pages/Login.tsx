@@ -39,9 +39,9 @@ const Login = () => {
         },
     })
 
-    const handleSubmit = async (values: z.infer<typeof formSchema>, e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSubmit = async (values: z.infer<typeof formSchema>) => {
         const { username, password } = values
+
         try {
             setLoading(true)
             const token = await authenticateUser({ username, password })
@@ -59,8 +59,7 @@ const Login = () => {
         setLoading(false)
     }
 
-    const handleRegister = async (values: z.infer<typeof formSchema>, e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleRegister = async (values: z.infer<typeof formSchema>) => {
         const { username, password } = values
         try {
             setLoading(true)
@@ -88,7 +87,10 @@ const Login = () => {
                 <div className=""></div>
                 <Form {...form}>
                     <form
-                        onSubmit={(e) => form.handleSubmit((values) => handleSubmit(values, e))}
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            handleSubmit(form.getValues())
+                        }}
                         className="space-y-2 w-2/3"
                     >
                         <FormField
@@ -128,7 +130,7 @@ const Login = () => {
                         </Button>
                     </form>
                 </Form>
-                <p className="underline cursor-pointer" onClick={handleRegister}>
+                <p className="underline cursor-pointer" onClick={(e) => handleRegister(form.getValues())}>
                     Registrarse
                 </p>
             </div>

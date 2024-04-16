@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import { User, UserAttributes } from "./types/UsersTypes"
 
@@ -27,9 +28,10 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | undefined>(undefined)
+    const navigate = useNavigate()
+    const backUrl = import.meta.env.VITE_REACT_APP_BACK_URL
 
-    const backUrl = process.env.REACT_APP_BACK_URL
+    const [user, setUser] = useState<User | undefined>(undefined)
 
     const registerUser = async (userToAuth: UserAttributes): Promise<string> => {
         const { username, password } = userToAuth
@@ -72,6 +74,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         return result
     }
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/login")
+        }
+    }, [user, history])
 
     return (
         <AuthContext.Provider value={{ authenticateUser, registerUser, getUserByToken, user, setUser }}>

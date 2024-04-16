@@ -10,7 +10,7 @@ function App() {
         <AuthProvider>
             <div className="bg-gray-900 overflow-hidden">
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/LOGIN" element={<Login />} />
                     <Route path="gestion" element={<Management />} />
                 </Routes>
             </div>
