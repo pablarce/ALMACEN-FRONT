@@ -27,9 +27,17 @@ interface DataTableProps<TData, TValue> {
     className?: string
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    idSelected: string
+    setIdSelected: (id: string) => void
 }
 
-export function ProductsTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function ProductsTable<TData, TValue>({
+    columns,
+    data,
+    className,
+    idSelected,
+    setIdSelected,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -54,8 +62,8 @@ export function ProductsTable<TData, TValue>({ columns, data }: DataTableProps<T
         },
     })
     return (
-        <div>
-            <div className="flex items-center py-4 gap-2">
+        <div className={`${className} h-full`}>
+            <div className={`${className} flex items-center py-4 gap-2 `}>
                 <Input
                     placeholder="Filtrar por nombre..."
                     value={(table.getColumn("product_name")?.getFilterValue() as string) ?? ""}
@@ -88,7 +96,9 @@ export function ProductsTable<TData, TValue>({ columns, data }: DataTableProps<T
                 </DropdownMenu>
             </div>
 
-            <div className={`bg-gray-100 p-4 border-2 rounded-xl overflow-y-scroll`}>
+            <div
+                className={`bg-gray-100 p-4 border-2 rounded-xl overflow-y-scroll overflow-x-auto lg:h-[80vh] h-[70vh]`}
+            >
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -108,7 +118,22 @@ export function ProductsTable<TData, TValue>({ columns, data }: DataTableProps<T
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                                <TableRow
+                                    className={`${
+                                        idSelected === row.original._id
+                                            ? "bg-slate-300 hover:bg-slate-300"
+                                            : "hover:bg-slate-200"
+                                    }`}
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                    onClick={() => {
+                                        if (idSelected === row.original._id) {
+                                            setIdSelected("")
+                                        } else {
+                                            setIdSelected(row.original._id)
+                                        }
+                                    }}
+                                >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
