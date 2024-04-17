@@ -2,6 +2,7 @@ import { useState } from "react"
 
 import { columns } from "../components/ProductsTable/columns"
 import { ProductsTable } from "../components/ProductsTable/ProductsTable"
+import ProductView from "../components/ProductView"
 import { useProductContext } from "../contexts/productsContext"
 import productData from "./productData"
 
@@ -20,6 +21,7 @@ const Management = () => {
                 idSelected={idSelected}
                 setIdSelected={setIdSelected}
             />
+            {idSelected !== "" && <ProductView idProductPulsed={"1234"} className="w-full h-[80vh]" />}
         </div>
     )
 }

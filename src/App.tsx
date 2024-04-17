@@ -13,7 +13,7 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route
-                        path="gestion"
+                        path="/gestion"
                         element={
                             <ProductProvider>
                                 <Management />
