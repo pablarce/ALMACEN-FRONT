@@ -1,8 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { Product } from "../../types/types"
 import { Button } from "../ui/button"
+import { Checkbox } from "../ui/checkbox"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -14,6 +15,27 @@ import {
 
 export const columns: ColumnDef<Product>[] = [
     {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value: any) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value: any) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
         accessorKey: "_id",
         header: "ID",
     },
@@ -23,11 +45,25 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "stock",
-        header: "Stock",
+        header: ({ column }) => {
+            return (
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Stock
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
     {
         accessorKey: "price",
-        header: () => <div className="">Price</div>,
+        header: ({ column }) => {
+            return (
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Price
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
         cell: ({ row }) => {
             const amount = parseFloat(row.getValue("price"))
             const formatted = new Intl.NumberFormat("en-US", {
