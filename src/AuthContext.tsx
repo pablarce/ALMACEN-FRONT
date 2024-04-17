@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { User, UserAttributes } from "./types/UsersTypes"
+import { User, UserAttributes } from "./types/types"
 
 interface AuthContextType {
     getUserByToken: (token: string) => Promise<User>
@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const registerUser = async (userToAuth: UserAttributes): Promise<string> => {
         const { username, password } = userToAuth
-        const response = await fetch(`${backUrl}/api/Users/Register?username=${username}&password=${password}`, {
+        const response = await fetch(`${backUrl}/users/Register?username=${username}&password=${password}`, {
             method: "POST",
         })
 
@@ -49,12 +49,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const authenticateUser = async (userToAuth: UserAttributes): Promise<string> => {
         const { username, password } = userToAuth
-        const response = await fetch(
-            `${backUrl}/api/Users/Authenticate?username=${username}&password=${password}`,
-            {
-                method: "POST",
-            }
-        )
+        const response = await fetch(`${backUrl}/users/Authenticate?username=${username}&password=${password}`, {
+            method: "POST",
+        })
 
         if (!response.ok) {
             throw new Error("Authentication failed")
@@ -64,7 +61,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     const getUserByToken = async (token: string): Promise<User> => {
-        const response = await fetch(`${backUrl}/api/Users/GetUserByToken?token=${token}`)
+        const response = await fetch(`${backUrl}/users/GetUserByToken?token=${token}`)
 
         if (!response.ok) {
             throw new Error("User not found")
@@ -77,7 +74,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     useEffect(() => {
         if (!user) {
-            navigate("/login")
+            //navigate("/login")
         }
     }, [user, history])
 

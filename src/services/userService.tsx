@@ -1,12 +1,7 @@
 import axios from "axios"
 import { useMutation, useQuery } from "react-query"
 
-import config from "../config"
-
-interface User {
-    id: number
-    name: string
-}
+import { User } from "../types/types"
 
 interface UserData {
     data: User[] | undefined
@@ -14,9 +9,11 @@ interface UserData {
     isLoading: boolean
 }
 
-const UserDataFetcher = (): UserData => {
+const backendUrl = import.meta.env.VITE_REACT_APP_BACK_URL
+
+const useGetUser = (): UserData => {
     const fetchUsers = async (): Promise<User[]> => {
-        const response = await axios.get<User[]>(`${config.backendUrl}/users`)
+        const response = await axios.get<User[]>(`${backendUrl}/users`)
         return response.data
     }
 
@@ -27,7 +24,7 @@ const UserDataFetcher = (): UserData => {
 
 const useCreateUser = () => {
     const createUser = async (newUser: User) => {
-        const response = await axios.post(`${config.backendUrl}/users`, newUser)
+        const response = await axios.post(`${backendUrl}/users`, newUser)
         return response.data
     }
 
@@ -36,7 +33,7 @@ const useCreateUser = () => {
 
 const useUpdateUser = () => {
     const updateUser = async (updatedUser: User) => {
-        const response = await axios.put(`${config.backendUrl}/users/${updatedUser.id}`, updatedUser)
+        const response = await axios.put(`${backendUrl}/users/${updatedUser._id}`, updatedUser)
         return response.data
     }
 
@@ -45,10 +42,10 @@ const useUpdateUser = () => {
 
 const useDeleteUser = () => {
     const deleteUser = async (id: number) => {
-        await axios.delete(`${config.backendUrl}/users/${id}`)
+        await axios.delete(`${backendUrl}/users/${id}`)
     }
 
     return useMutation<void, Error, number>(deleteUser)
 }
 
-export { UserDataFetcher, useCreateUser, useUpdateUser, useDeleteUser }
+export { useGetUser, useCreateUser, useUpdateUser, useDeleteUser }
