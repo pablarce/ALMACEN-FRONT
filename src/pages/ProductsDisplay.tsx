@@ -5,7 +5,6 @@ import { ProductsTable } from "../components/ProductsTable/ProductsTable"
 import ProductView from "../components/ProductView"
 import { useProductContext } from "../contexts/productsContext"
 import { Product } from "../types/types"
-import productData from "./productData"
 
 const Management = () => {
     const { products, error, isLoading } = useProductContext()

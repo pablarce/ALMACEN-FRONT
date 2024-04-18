@@ -1,22 +1,51 @@
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 interface SwitchButtonProps {
-    dataFont: string
-    setDataFont: React.Dispatch<React.SetStateAction<string>>
-    classname?: string
+    className?: string
 }
 
 const SwitchButton = (props: SwitchButtonProps) => {
+    const [tab, setTab] = useState<string>("products")
+    const navigate = useNavigate()
+
     return (
-        <div className={`${props.classname}`}>
+        <div className={`${props.className}`}>
             <div className="bg-gray-200 flex gap-6 items-center px-4 h-14 rounded-xl border text-lg select-none">
-                <div onClick={() => props.setDataFont("local")} className="z-10 w-10 hover:cursor-pointer">
-                    Local
+                <div
+                    onClick={() => {
+                        setTab("products")
+                        navigate("products")
+                    }}
+                    className="z-10 w-18 hover:cursor-pointer"
+                >
+                    Productos
                 </div>
-                <div onClick={() => props.setDataFont("back")} className="z-10 w-10 hover:cursor-pointer">
-                    Back
+                <div
+                    onClick={() => {
+                        setTab("employees")
+                        navigate("employees")
+                    }}
+                    className="z-10 w-18 hover:cursor-pointer"
+                >
+                    Empleados
+                </div>
+                <div
+                    onClick={() => {
+                        setTab("purchases")
+                        navigate("purchases")
+                    }}
+                    className="z-10 w-18 hover:cursor-pointer"
+                >
+                    Compras
                 </div>
                 <div
                     className={`absolute bg-white rounded-xl shadow-md h-10 duration-300 ${
-                        props.dataFont === "local" ? "-translate-x-2 w-16" : "translate-x-14 w-14"
+                        tab === "products"
+                            ? "-translate-x-2 w-24"
+                            : tab === "employees"
+                              ? "translate-x-24 w-28"
+                              : "translate-x-52 w-20"
                     }`}
                 ></div>
             </div>

@@ -23,3 +23,22 @@ export type Product = {
     type: string
     description: string
 }
+
+export type Employee = {
+    _id: string
+    firstName: string
+    lastName: string
+    role: string
+    email: string
+    phoneNumber: string
+    address?: string
+    city?: string
+    state?: string
+    zipCode?: string
+    country?: string
+    hireDate: Date
+    workingHours?: string
+    salary: number
+    contractType?: string
+    education?: string[]
+}

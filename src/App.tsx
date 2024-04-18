@@ -1,10 +1,11 @@
-import { SetStateAction } from "react"
 import { Route, Routes } from "react-router-dom"
 
 import { AuthProvider, useAuth } from "./AuthContext"
 import Navbar from "./components/Navbar"
 import { Toaster } from "./components/ui/toaster"
+import { EmployeeProvider } from "./contexts/employeesContext"
 import { ProductProvider } from "./contexts/productsContext"
+import EmployeesDisplay from "./pages/EmployeesDisplay"
 import Login from "./pages/Login"
 import Management from "./pages/Management"
 
@@ -14,15 +15,7 @@ function App() {
     return (
         <AuthProvider>
             <div className="bg-gray-900">
-                {user && (
-                    <Navbar
-                        dataFont={""}
-                        setDataFont={function (value: SetStateAction<string>): void {
-                            throw new Error("Function not implemented.")
-                        }}
-                        client={undefined}
-                    />
-                )}
+                {true && <Navbar />}
 
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -32,6 +25,14 @@ function App() {
                             <ProductProvider>
                                 <Management />
                             </ProductProvider>
+                        }
+                    />
+                    <Route
+                        path="/employees"
+                        element={
+                            <EmployeeProvider>
+                                <EmployeesDisplay />
+                            </EmployeeProvider>
                         }
                     />
                 </Routes>

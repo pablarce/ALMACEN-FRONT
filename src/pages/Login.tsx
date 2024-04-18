@@ -49,7 +49,7 @@ const Login = () => {
             await new Promise((resolve) => setTimeout(resolve, 1000))
             console.log("Authentication successful. Token:", token)
             await new Promise((resolve) => setTimeout(resolve, 300))
-            navigate("/gestion")
+            navigate("/products")
         } catch (error: any) {
             toast({
                 title: error.message,
@@ -71,7 +71,6 @@ const Login = () => {
             toast({
                 title: "Registration failed",
                 description: error.message,
-                status: "error",
             })
         }
         setLoading(false)
@@ -130,7 +129,7 @@ const Login = () => {
                         </Button>
                     </form>
                 </Form>
-                <p className="underline cursor-pointer" onClick={(e) => handleRegister(form.getValues())}>
+                <p className="underline cursor-pointer" onClick={() => handleRegister(form.getValues())}>
                     Registrarse
                 </p>
             </div>
