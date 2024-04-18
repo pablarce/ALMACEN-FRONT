@@ -42,3 +42,17 @@ export type Employee = {
     contractType?: string
     education?: string[]
 }
+
+type PurchaseItem = {
+    productId: string
+    amount: number
+}
+
+export type Purchase = {
+    _id: string
+    clientId: string
+    supplierId: string
+    items: PurchaseItem[]
+    totalCost: number
+    purchaseDate: Date
+}

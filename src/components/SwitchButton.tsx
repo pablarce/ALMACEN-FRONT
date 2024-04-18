@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+import { useAuth } from "../AuthContext"
+
 interface SwitchButtonProps {
     className?: string
 }
@@ -8,6 +10,13 @@ interface SwitchButtonProps {
 const SwitchButton = (props: SwitchButtonProps) => {
     const [tab, setTab] = useState<string>("products")
     const navigate = useNavigate()
+    const { user } = useAuth()
+
+    useEffect(() => {
+        if (true) {
+            navigate(tab)
+        }
+    }, [tab])
 
     return (
         <div className={`${props.className}`}>
@@ -15,7 +24,6 @@ const SwitchButton = (props: SwitchButtonProps) => {
                 <div
                     onClick={() => {
                         setTab("products")
-                        navigate("products")
                     }}
                     className="z-10 w-18 hover:cursor-pointer"
                 >
@@ -24,7 +32,6 @@ const SwitchButton = (props: SwitchButtonProps) => {
                 <div
                     onClick={() => {
                         setTab("employees")
-                        navigate("employees")
                     }}
                     className="z-10 w-18 hover:cursor-pointer"
                 >
@@ -33,7 +40,6 @@ const SwitchButton = (props: SwitchButtonProps) => {
                 <div
                     onClick={() => {
                         setTab("purchases")
-                        navigate("purchases")
                     }}
                     className="z-10 w-18 hover:cursor-pointer"
                 >

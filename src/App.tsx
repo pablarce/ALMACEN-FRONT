@@ -2,12 +2,15 @@ import { Route, Routes } from "react-router-dom"
 
 import { AuthProvider, useAuth } from "./AuthContext"
 import Navbar from "./components/Navbar"
+import PurchaseCard from "./components/PurchaseCard"
 import { Toaster } from "./components/ui/toaster"
 import { EmployeeProvider } from "./contexts/employeesContext"
 import { ProductProvider } from "./contexts/productsContext"
+import { PurchaseProvider } from "./contexts/purchasesContext"
 import EmployeesDisplay from "./pages/EmployeesDisplay"
 import Login from "./pages/Login"
-import Management from "./pages/Management"
+import ProductsDisplay from "./pages/ProductsDisplay"
+import PurchasesDisplay from "./pages/PurchasesDisplay"
 
 function App() {
     const { user } = useAuth()
@@ -23,7 +26,7 @@ function App() {
                         path="/products"
                         element={
                             <ProductProvider>
-                                <Management />
+                                <ProductsDisplay />
                             </ProductProvider>
                         }
                     />
@@ -33,6 +36,14 @@ function App() {
                             <EmployeeProvider>
                                 <EmployeesDisplay />
                             </EmployeeProvider>
+                        }
+                    />
+                    <Route
+                        path="/purchases"
+                        element={
+                            <PurchaseProvider>
+                                <PurchasesDisplay />
+                            </PurchaseProvider>
                         }
                     />
                 </Routes>
