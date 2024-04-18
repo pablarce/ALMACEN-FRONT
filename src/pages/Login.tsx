@@ -50,6 +50,10 @@ const Login = () => {
                 const authenticatedUser = response.user
                 setUser(authenticatedUser)
                 await new Promise((resolve) => setTimeout(resolve, 2000))
+                toast({
+                    title: "Authentification successful",
+                    description: response.message,
+                })
                 navigate("/products")
             } else {
                 toast({
@@ -69,19 +73,25 @@ const Login = () => {
 
     const handleRegister = async (values: z.infer<typeof formSchema>) => {
         const { username, password } = values
+
         try {
             setLoading(true)
-            await new Promise((resolve) => setTimeout(resolve, 1000))
             const result = await registerUser({ username, password })
-            console.log("Registration successful. Result:", result)
-            navigate("/gestion")
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+            const authenticatedUser = result
+            setUser(authenticatedUser)
+            toast({
+                title: "Registration successful",
+            })
+            navigate("/products")
         } catch (error: any) {
             toast({
                 title: "Registration failed",
                 description: error.message,
             })
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     return (

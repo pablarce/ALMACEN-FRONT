@@ -10,7 +10,7 @@ interface AuthenticationResponse {
 
 interface AuthContextType {
     authenticateUser: (userToAuth: UserAttributes) => Promise<AuthenticationResponse>
-    registerUser: (userToAuth: UserAttributes) => Promise<string>
+    registerUser: (userToAuth: UserAttributes) => Promise<User>
     user: User | undefined
     setUser: React.Dispatch<React.SetStateAction<User | undefined>>
 }
@@ -34,10 +34,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const [user, setUser] = useState<User | undefined>(undefined)
 
-    const registerUser = async (userToAuth: UserAttributes): Promise<string> => {
+    const registerUser = async (userToAuth: UserAttributes): Promise<User> => {
         const { username, password } = userToAuth
-        const response = await fetch(`${backUrl}/users/Register?username=${username}&password=${password}`, {
+        const response = await fetch(`${backUrl}/users/register?username=${username}&password=${password}`, {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
         })
 
         if (!response.ok) {

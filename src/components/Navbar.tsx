@@ -1,4 +1,4 @@
-import { Wallet } from "lucide-react"
+import { GraduationCap } from "lucide-react"
 
 import logo from "../assets/full_logo.svg"
 import { useAuth } from "../AuthContext"
@@ -20,10 +20,13 @@ const Navbar = (props: NavbarProps) => {
             </div>
 
             <div className="flex items-center justify-center h-14 w-fit px-4 rounded-xl border text-lg cursor-pointer hover:bg-gray-700">
-                <p className="text-white">{user?.username}</p>
+                <p className="text-white flex text-inline">
+                    <span>{user?.firstName}</span>
+                    &nbsp; <span>{user?.lastName}</span>
+                </p>
             </div>
             <div className="flex items-center justify-center w-fit px-4 bg-gray-700 h-14 rounded-xl border border-gray-50 text-gray-50 gap-4">
-                <Wallet />
+                <GraduationCap />
                 <p className="text-xl">{user?.role} </p>
             </div>
         </div>
