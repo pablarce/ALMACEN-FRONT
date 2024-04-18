@@ -27,7 +27,7 @@ const formSchema = z.object({
 
 const Login = () => {
     const navigate = useNavigate()
-    const { authenticateUser, getUserByToken, setUser, registerUser } = useAuth()
+    const { authenticateUser, setUser, registerUser } = useAuth()
     const { toast } = useToast()
     const [loading, setLoading] = useState(false)
 
@@ -44,19 +44,27 @@ const Login = () => {
 
         try {
             setLoading(true)
-            const token = await authenticateUser({ username, password })
-            setUser(await getUserByToken(token))
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log("Authentication successful. Token:", token)
-            await new Promise((resolve) => setTimeout(resolve, 300))
-            navigate("/products")
+            const response = await authenticateUser({ username, password })
+
+            if (response && response.user) {
+                const authenticatedUser = response.user
+                setUser(authenticatedUser)
+                await new Promise((resolve) => setTimeout(resolve, 2000))
+                navigate("/products")
+            } else {
+                toast({
+                    title: "Authentication failed",
+                    description: "Username might not exist or password is incorrect",
+                })
+            }
         } catch (error: any) {
             toast({
-                title: error.message,
-                description: "Username might not exist or password is incorrect",
+                title: "Error",
+                description: error.message,
             })
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     const handleRegister = async (values: z.infer<typeof formSchema>) => {

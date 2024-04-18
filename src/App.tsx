@@ -1,8 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 
-import { AuthProvider, useAuth } from "./AuthContext"
+import { useAuth } from "./AuthContext"
 import Navbar from "./components/Navbar"
-import PurchaseCard from "./components/PurchaseCard"
 import { Toaster } from "./components/ui/toaster"
 import { EmployeeProvider } from "./contexts/employeesContext"
 import { ProductProvider } from "./contexts/productsContext"
@@ -16,9 +15,9 @@ function App() {
     const { user } = useAuth()
 
     return (
-        <AuthProvider>
+        <>
             <div className="bg-gray-900">
-                {true && <Navbar />}
+                {user && <Navbar />}
 
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -49,7 +48,7 @@ function App() {
                 </Routes>
             </div>
             <Toaster />
-        </AuthProvider>
+        </>
     )
 }
 

@@ -13,7 +13,7 @@ const SwitchButton = (props: SwitchButtonProps) => {
     const { user } = useAuth()
 
     useEffect(() => {
-        if (true) {
+        if (user) {
             navigate(tab)
         }
     }, [tab])

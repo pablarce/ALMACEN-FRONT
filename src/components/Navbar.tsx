@@ -19,10 +19,10 @@ const Navbar = (props: NavbarProps) => {
                 <SwitchButton className="self-center align-middle" />
             </div>
 
-            <div className="flex items-center justify-center h-14 w-28 rounded-xl border text-lg cursor-pointer hover:bg-gray-700">
+            <div className="flex items-center justify-center h-14 w-fit px-4 rounded-xl border text-lg cursor-pointer hover:bg-gray-700">
                 <p className="text-white">{user?.username}</p>
             </div>
-            <div className="flex items-center justify-center w-64 bg-gray-700 h-14 rounded-xl border border-gray-50 text-gray-50 gap-4">
+            <div className="flex items-center justify-center w-fit px-4 bg-gray-700 h-14 rounded-xl border border-gray-50 text-gray-50 gap-4">
                 <Wallet />
                 <p className="text-xl">{user?.role} </p>
             </div>
