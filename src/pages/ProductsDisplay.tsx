@@ -4,6 +4,8 @@ import { columns } from "../components/ProductsTable/columns"
 import { ProductsTable } from "../components/ProductsTable/ProductsTable"
 import ProductView from "../components/ProductView"
 import { useProductContext } from "../contexts/productsContext"
+import { Product } from "../types/types"
+import productData from "./productData"
 
 const Management = () => {
     const { products, error, isLoading } = useProductContext()
@@ -13,19 +15,21 @@ const Management = () => {
         <div
             className={`${idSelected === "" ? "" : "grid grid-cols-2"} gap-6 items-center justify-center overflow-hidden w-full bg-gradient h-[100vh] `}
         >
-            <ProductsTable
+            <ProductsTable<Product, any>
                 columns={columns}
                 data={products || []}
                 className="p-4 "
                 idSelected={idSelected}
                 setIdSelected={setIdSelected}
             />
-            {idSelected !== "" && (
-                <ProductView
-                    idProductPulsed={idSelected}
-                    className="w-full 2xl:h-[80vh] lg:h-[70vh] base:h-[60vh] overflow-y-scroll"
-                />
-            )}
+            <div className="p-4">
+                {idSelected !== "" && (
+                    <ProductView
+                        idProductPulsed={idSelected}
+                        className="w-full lg:h-[80vh] h-[70vh] overflow-y-scroll"
+                    />
+                )}
+            </div>
         </div>
     )
 }

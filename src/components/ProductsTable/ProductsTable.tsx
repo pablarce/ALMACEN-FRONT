@@ -61,6 +61,7 @@ export function ProductsTable<TData, TValue>({
             rowSelection,
         },
     })
+
     return (
         <div className={`${className} h-full`}>
             <div className={`${className} flex items-center py-4 gap-2 `}>
@@ -97,7 +98,7 @@ export function ProductsTable<TData, TValue>({
             </div>
 
             <div
-                className={`bg-gray-100 p-4 border-2 rounded-xl overflow-y-scroll overflow-x-auto lg:h-[80vh] h-[70vh]`}
+                className={`bg-gray-100 p-4 border-2 rounded-xl overflow-y-scroll overflow-x-auto 2xl:h-[80vh] lg:h-[70vh] base:h-[65vh] h-[60vh]`}
             >
                 <Table>
                     <TableHeader>
